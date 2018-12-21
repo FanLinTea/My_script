@@ -164,7 +164,7 @@ class Connect_mysql(object):
 
     def __init__(self, mysql_name):
         self.mysql = Connect_mysql._mysql_config.get(mysql_name)
-        if self.mysql is None:
+        if not self.mysql:
             raise Exception('你输入的数据库别名有误,或者你数据库未配置')
         #  连接池
         try:
@@ -205,9 +205,8 @@ class Connect_mysql(object):
             conn.close()
 
     def thread_sql(self, sqls):
-        if isinstance(sqls, list) is None:
+        if not isinstance(sqls, list):
             raise Exception('需要执行的sql应该放到列表中,这样才能启动多线程')
-
         if 'select' in sqls[0]:
             request = threadpool.makeRequests(self.select_sql, sqls)
             for req in request:
@@ -227,4 +226,4 @@ if __name__ == '__main__':
     for i in range(50,200):
         sql = 'insert into zhuge_dm.wangyang_test (name, age) values ("明%s", %s)' % (i, i)
         pms.append(sql)
-    da = mysqls.thread_sql(pms)
+    da = mysqls.thread_sql('asd')
