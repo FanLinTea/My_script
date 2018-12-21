@@ -182,6 +182,7 @@ class Connect_mysql(object):
         try:
             cursor.execute(sql)
             data = cursor.fetchall()
+            print('查询出的数据是: ', data)
             cursor.close()
             return data
         except Exception as e:
@@ -196,6 +197,10 @@ class Connect_mysql(object):
         try:
             cursor.execute(sql)
             info = cursor.rowcount
+            if info:
+                print('操作数据库成功')
+            else:
+                print('数据库操作失败')
             conn.commit()
             return info
         except Exception as e:
@@ -223,7 +228,6 @@ class Connect_mysql(object):
 if __name__ == '__main__':
     mysqls = Connect_mysql('测试库')
     pms = []
-    for i in range(50,200):
-        sql = 'insert into zhuge_dm.wangyang_test (name, age) values ("明%s", %s)' % (i, i)
-        pms.append(sql)
-    da = mysqls.thread_sql('asd')
+    sql = 'insert into zhuge_dm.wangyang_test (name, age) values ("明222333", 33222)'
+    pms.append(sql)
+    da = mysqls.thread_sql(pms)

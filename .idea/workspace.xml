@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="229a689e-0674-49de-b37f-55d03bf69e16" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/测试.py" beforeDir="false" afterPath="$PROJECT_DIR$/测试.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -14,7 +11,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/My_script$utils.coverage" NAME="utils Coverage Results" MODIFIED="1545372591986" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/My_script$utils.coverage" NAME="utils Coverage Results" MODIFIED="1545376343456" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/My_script$.coverage" NAME="测试 Coverage Results" MODIFIED="1545304760012" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/My_script$xinfang.coverage" NAME="xinfang Coverage Results" MODIFIED="1544668706134" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
@@ -46,13 +43,13 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="18" />
-          <entry key="py" value="6429" />
+          <entry key="py" value="6469" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="18" />
-          <entry key="Python" value="6429" />
+          <entry key="Python" value="6469" />
         </counts>
       </usages-collector>
     </session>
@@ -62,23 +59,15 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/utils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="290">
-              <caret line="223" column="26" lean-forward="true" selection-start-line="223" selection-start-column="26" selection-end-line="223" selection-end-column="26" />
+            <state relative-caret-position="228">
+              <caret line="222" column="26" lean-forward="true" selection-start-line="222" selection-start-column="26" selection-end-line="222" selection-end-column="26" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
-                <marker date="1545372549105" expanded="true" signature="4359:5576" ph="..." />
-                <marker date="1545372549105" expanded="true" signature="5607:6121" ph="..." />
-                <marker date="1545372549105" expanded="true" signature="7443:7444" ph="..." />
+                <element signature="e#3277#4308#0" />
+                <marker date="1545376343430" expanded="true" signature="4359:5576" ph="..." />
+                <marker date="1545376343430" expanded="true" signature="5607:6117" ph="..." />
+                <marker date="1545376343430" expanded="true" signature="7434:7435" ph="..." />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://D:/virtualenv/py3_dm/Lib/site-packages/threadpool.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="642">
-              <caret line="97" column="7" lean-forward="true" selection-start-line="83" selection-start-column="4" selection-end-line="97" selection-end-column="7" />
             </state>
           </provider>
         </entry>
@@ -122,6 +111,7 @@
       <find>&quot;</find>
       <find>property_type</find>
       <find>price_range</find>
+      <find>None</find>
     </findStrings>
     <replaceStrings>
       <replace>'</replace>
@@ -344,7 +334,7 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3441911" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.40173724" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.22149837" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -505,13 +495,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="290">
-          <caret line="223" column="26" lean-forward="true" selection-start-line="223" selection-start-column="26" selection-end-line="223" selection-end-column="26" />
+        <state relative-caret-position="228">
+          <caret line="222" column="26" lean-forward="true" selection-start-line="222" selection-start-column="26" selection-end-line="222" selection-end-column="26" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
-            <marker date="1545372549105" expanded="true" signature="4359:5576" ph="..." />
-            <marker date="1545372549105" expanded="true" signature="5607:6121" ph="..." />
-            <marker date="1545372549105" expanded="true" signature="7443:7444" ph="..." />
+            <element signature="e#3277#4308#0" />
+            <marker date="1545376343430" expanded="true" signature="4359:5576" ph="..." />
+            <marker date="1545376343430" expanded="true" signature="5607:6117" ph="..." />
+            <marker date="1545376343430" expanded="true" signature="7434:7435" ph="..." />
           </folding>
         </state>
       </provider>
