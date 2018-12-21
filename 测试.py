@@ -1,4 +1,6 @@
-from utils import read_excel
+class A():
+    def a(self):
+        print(1)
 
-s = read_excel('12.xlsx', 'q4', row_or_col='col')
-print(s)
+d = A()
+d.a()

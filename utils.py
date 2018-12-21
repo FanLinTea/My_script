@@ -2,6 +2,9 @@ import requests
 import xlrd
 import pymysql
 import json
+import time
+from DBUtils.PooledDB import PooledDB
+import threadpool
 
 
 def citys(city_name=None, city_Jpy=None, index=None, size=None):
@@ -120,12 +123,12 @@ def read_excel(file_name, table_name, row_or_col='row', start=0):
 
     data = []
     if row_or_col:
-        if row_or_col=='row':
+        if row_or_col == 'row':
             for rownum in range(start, row_num):
                 info = table.row_values(rownum)
                 data.append(info)
             return data
-        if row_or_col=='col':
+        if row_or_col == 'col':
             for colnum in range(start, cols_num):
                 info = table.col_values(colnum)
                 data.append(info)
@@ -137,11 +140,91 @@ def read_excel(file_name, table_name, row_or_col='row', start=0):
         return data
 
 
-def connect_mysql(host, user, password, db):
-    mysqldb = pymysql.connect(host, user, password, db)
-    cursor = mysqldb.cursor()
-    return cursor
+class Connect_mysql(object):
+    _mysql_con = []
+    _mysql_config = {
+        '测试库': {'host': '101.201.119.240', 'port': 3306, 'user': 'afe-rw',
+                'password': 'HMugq0Fjz3bK67tHdSFottW2ORwSKpcJ'},
+        '新房': {'host': 'mysql.zhugefang.com', 'port': 9543, 'user': 'data_r',
+               'password': 'ugtQiLyMAgBUf81tyOoMcRgzIzYOszjL'},
+        'tidb': {'host': 'tidb.zhuge.com', 'port': 9902, 'user': 'data_r',
+                 'password': 'BQ6Qr1*dIh%##bK3zg5p0M6x@Mkqs&hg'},
+        'zhuge_dm': {'host': 'mysql.zhugefang.com', 'port': 9571, 'user': 'dm_rw',
+                     'password': 'CszwRk3breCsM5BCH0yDfHLorJM5QB5T'},
+        '二手房_新': {'host': 'mysql.zhugefang.com', 'port': 9511, 'user': 'data_rw',
+                  'password': 'BQ6Qr1*dIh%##bK3zg5p0M6x@Mkqs&hg'},
+        '二手房': {'host': 'mysql.zhugefang.com', 'port': 9521, 'user': 'data_r',
+                'password': 'BQ6Qr1*dIh%##bK3zg5p0M6x@Mkqs&hg'},
+        '租房': {'host': 'mysql.zhugefang.com', 'port': 9532, 'user': 'data_rw',
+               'password': 'BQ6Qr1*dIh%##bK3zg5p0M6x@Mkqs&hg'},
+        '临时库': {'host': 'rm-2ze7398d890nw9k12po.mysql.rds.aliyuncs.com', 'port': 3306, 'user': 'data_r',
+                'password': 'BQ6Qr1*dIh%##bK3zg5p0M6x@Mkqs&hg'},
+    }
+
+
+    def __init__(self, mysql_name):
+        self.mysql = Connect_mysql._mysql_config.get(mysql_name)
+        if self.mysql is None:
+            raise Exception('你输入的数据库别名有误,或者你数据库未配置')
+        #  连接池
+        try:
+            self.pool = PooledDB(pymysql, 5, host=self.mysql.get('host'), user=self.mysql.get('user'),
+                            passwd=self.mysql.get('password'), port=self.mysql.get('port'), charset="utf8")
+        except Exception as e:
+            print(e)
+
+        #  线程池
+        self.thread_poll = threadpool.ThreadPool(5)
+
+    def select_sql(self, sql=''):
+        conn = self.pool.connection()
+        cursor = conn.cursor(cursor=pymysql.cursors.DictCursor)
+        try:
+            cursor.execute(sql)
+            data = cursor.fetchall()
+            cursor.close()
+            return data
+        except Exception as e:
+            pass
+        finally:
+            cursor.close()
+            conn.close()
+
+    def other_sql(self, sql=''):
+        conn = self.pool.connection()
+        cursor = conn.cursor(cursor=pymysql.cursors.DictCursor)
+        try:
+            cursor.execute(sql)
+            info = cursor.rowcount
+            conn.commit()
+            return info
+        except Exception as e:
+            print(e)
+        finally:
+            cursor.close()
+            conn.close()
+
+    def thread_sql(self, sqls):
+        if isinstance(sqls, list) is None:
+            raise Exception('需要执行的sql应该放到列表中,这样才能启动多线程')
+
+        if 'select' in sqls[0]:
+            request = threadpool.makeRequests(self.select_sql, sqls)
+            for req in request:
+                self.thread_poll.putRequest(req)
+            self.thread_poll.wait()
+
+        else:
+            request = threadpool.makeRequests(self.other_sql, sqls)
+            for req in request:
+                self.thread_poll.putRequest(req)
+            self.thread_poll.wait()
 
 
 if __name__ == '__main__':
-    citys()
+    mysqls = Connect_mysql('测试库')
+    pms = []
+    for i in range(50,200):
+        sql = 'insert into zhuge_dm.wangyang_test (name, age) values ("明%s", %s)' % (i, i)
+        pms.append(sql)
+    da = mysqls.thread_sql(pms)
