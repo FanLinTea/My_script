@@ -5,6 +5,8 @@ import json
 import time
 from DBUtils.PooledDB import PooledDB
 import threadpool
+import redis
+from pymongo import MongoClient
 
 
 def citys(city_name=None, city_Jpy=None, index=None, size=None):
@@ -141,6 +143,12 @@ def read_excel(file_name, table_name, row_or_col='row', start=0):
 
 
 class Connect_mysql(object):
+    '''
+    使用mysql连接池  以及  线程池 执行sql语句
+    实例化类的时候  输入想要连接的数据库
+    只需要调取 thread_sql 方法  注意参数是列表
+    '''
+
     _mysql_con = []
     _mysql_config = {
         '测试库': {'host': '101.201.119.240', 'port': 3306, 'user': 'afe-rw',
@@ -224,10 +232,29 @@ class Connect_mysql(object):
                 self.thread_poll.putRequest(req)
             self.thread_poll.wait()
 
+def connect_redis(host=None, port=None, redis_url=None):
+    if redis_url:
+        pool = redis.ConnectionPool.from_url(redis_url)
+        r = redis.StrictRedis(connection_pool=pool)
+        return r
+    else:
+        pool = redis.ConnectionPool(host=host, port=port)
+        r = redis.StrictRedis(connection_pool=pool)
+        return r
+
+def connect_mongo(host=None, port=None, user=None, passwd=None, db=None, table=None):
+    if user and passwd:
+        uri = f"mongodb://{user}:{passwd}@{host}:{port}"
+    else:
+        uri = f"mongodb://{host}:{port}"
+
+    client = MongoClient(uri)
+    mongo_db = client.get_database(db)
+    mongo_tb = mongo_db.get_collection(table)
+    return mongo_tb
+
 
 if __name__ == '__main__':
-    mysqls = Connect_mysql('测试库')
-    pms = []
-    sql = 'insert into zhuge_dm.wangyang_test (name, age) values ("明222333", 33222)'
-    pms.append(sql)
-    da = mysqls.thread_sql(pms)
+    r = connect_redis('redis://:zhugeZHAOFANG1116@r-2zefc71473d249c4.redis.rds.aliyuncs.com:6379/0')
+    data = r.llen('hefei-MeiliwuApt_backup')
+    print(data)
