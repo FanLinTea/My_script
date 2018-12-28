@@ -80,6 +80,8 @@ def citys(city_name=None, city_Jpy=None, index=None, size=None):
         city_info = []
         city_data = requests.post('http://config.dapi.zhugefang.com/config/getcityinfo', json=body)
         city_info = json.loads(city_data.text).get('data')
+        city_num = len(city_info)
+        print('共有城市: '+ str(city_num) +'个')
         return city_info
 
     if not city_name and not city_Jpy and not index and not size:
@@ -95,11 +97,15 @@ def citys(city_name=None, city_Jpy=None, index=None, size=None):
                 }
             }
             city_data = requests.post('http://config.dapi.zhugefang.com/config/getcityinfo', json=body)
+            time.sleep(1)
             city_data = json.loads(city_data.text).get('data')
+            print(city_data)
             if city_data:
                 city_info += city_data
             else:
                 break
+        city_num = len(city_info)
+        print('共有城市: ' + str(city_num) + '个')
         return city_info
 
 
@@ -129,16 +135,19 @@ def read_excel(file_name, table_name, row_or_col='row', start=0):
             for rownum in range(start, row_num):
                 info = table.row_values(rownum)
                 data.append(info)
+            print(data)
             return data
         if row_or_col == 'col':
             for colnum in range(start, cols_num):
                 info = table.col_values(colnum)
                 data.append(info)
+            print(data)
             return data
     else:
         for rownum in range(start, row_num):
             info = table.row_values(rownum)
             data.append(info)
+        print(data)
         return data
 
 
@@ -209,6 +218,7 @@ class Connect_mysql(object):
                 print('操作数据库成功')
             else:
                 print('数据库操作失败')
+                print(sql)
             conn.commit()
             return info
         except Exception as e:
