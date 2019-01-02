@@ -21,7 +21,7 @@ def insert_data():
         city_id = i.get('id')
         city_spy = i.get('logogram')
         city_fpy = i.get('city_fpy')
-        property_type = [{'label': '写字楼', 'value': 7}, {'label': '别墅', 'value': 4}, {'label': '商铺', 'value': 3},
+        property_type = [{'label': '写字楼', 'value': 7}, {'label': '别墅', 'value': 5}, {'label': '商铺', 'value': 3},
                           {'label': '住宅', 'value': 1}, {'label': '商住', 'value': 6}]
         property_type = json.dumps(property_type, ensure_ascii=False)
         if city_name in city_all:
@@ -59,7 +59,7 @@ def insert_data():
 
                     price_range = json.dumps(price, ensure_ascii=False)
                     times = int(time.time());
-                    sql = f"insert into spider.city_bladeinfo_copy1 (city_id,city_name,price_range,property_type,status,ctime,city_fpy,city_spy,commercial_type) values ({city_id},'{city_name}','{price_range}','{property_type}',1,{times},'{city_fpy}','{city_spy}',0)"
+                    sql = f"insert into spider.city_bladeinfo (city_id,city_name,price_range,property_type,status,ctime,city_fpy,city_spy,commercial_type) values ({city_id},'{city_name}','{price_range}','{property_type}',1,{times},'{city_fpy}','{city_spy}',0)"
 
                     sqls.append(sql)
                     # try:
@@ -73,7 +73,7 @@ def insert_data():
             times = int(time.time())
             price = [{"value": "0-4000", "label": "4000元/平以下"}, {"value": "4000-5000", "label": "4000-5000元/平"}, {"value": "5000-6000", "label": "5000-6000元/平"}, {"value": "6000-7000", "label": "6000-7000元/平"}, {"value": "7000-8000", "label": "7000-8000元/平"}, {"value": "8000-10000", "label": "8000-10000元/平"}, {"value": "10000-999999999", "label": "10000元/平以上"}]
             price_range = json.dumps(price, ensure_ascii=False)
-            sql = f"insert into spider.city_bladeinfo_copy1 (city_id,city_name,price_range,property_type,status,ctime,city_fpy,city_spy,commercial_type) values ({city_id},'{city_name}','{price_range}','{property_type}',1,{times},'{city_fpy}','{city_spy}',0)"
+            sql = f"insert into spider.city_bladeinfo (city_id,city_name,price_range,property_type,status,ctime,city_fpy,city_spy,commercial_type) values ({city_id},'{city_name}','{price_range}','{property_type}',1,{times},'{city_fpy}','{city_spy}',0)"
             sqls.append(sql)
             # try:
             #     db.execute(sql)
@@ -86,12 +86,12 @@ if __name__ == '__main__':
     insert_data()
 
     '''更新商住 为 商业'''
-    property_type = [{"label": "写字楼", "value": 7}, {"label": "别墅", "value": 4}, {"label": "商铺", "value": 3}, {"label": "住宅", "value": 1}, {"label": "商业", "value": 6}]
+    property_type = [{"label": "写字楼", "value": 7}, {"label": "别墅", "value": 5}, {"label": "商铺", "value": 3}, {"label": "住宅", "value": 1}, {"label": "商业", "value": 6}]
     citytt = ['北京','佛山','广州','泉州','石家庄','珠海','成都','东莞','福州','厦门','上海']
     property_type = json.dumps(property_type, ensure_ascii=False)
     sqls = []
     for i in citytt:
-        sql = f"UPDATE spider.city_bladeinfo_copy1 SET property_type = '{property_type}' WHERE city_name = '{i}'"
+        sql = f"UPDATE spider.city_bladeinfo SET property_type = '{property_type}' WHERE city_name = '{i}'"
         sqls.append(sql)
     db.thread_sql(sqls)
 
@@ -102,15 +102,9 @@ if __name__ == '__main__':
         cityss.append(i[0])
     sqls = []
     for k in cityss:
-        sql = f"UPDATE spider.city_bladeinfo_copy1 SET commercial_type = 1 WHERE city_name = '{k}'"
+        sql = f"UPDATE spider.city_bladeinfo SET commercial_type = 1 WHERE city_name = '{k}'"
         sqls.append(sql)
     db.thread_sql(sqls)
-
-
-
-
-
-
 
 
 
