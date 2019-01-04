@@ -1,8 +1,11 @@
 from utils import *
 import re
 import time
+import requests
+import json
 
-city = citys()
+
+# city = citys()
 excel = read_excel('ss.xlsx', '价格区间', start=2)
 db = Connect_mysql('测试库')
 city_all = []
@@ -21,8 +24,7 @@ def insert_data():
         city_id = i.get('id')
         city_spy = i.get('logogram')
         city_fpy = i.get('city_fpy')
-        property_type = [{'label': '写字楼', 'value': 7}, {'label': '别墅', 'value': 5}, {'label': '商铺', 'value': 3},
-                          {'label': '住宅', 'value': 1}, {'label': '商住', 'value': 6}]
+        property_type = [{'label': '住宅', 'value': 1}, {'label': '别墅', 'value': 5}, {'label': '商住', 'value': 6}, {'label': '写字楼', 'value': 7},  {'label': '商铺', 'value': 3}]
         property_type = json.dumps(property_type, ensure_ascii=False)
         if city_name in city_all:
             for k in excel:
@@ -86,7 +88,7 @@ if __name__ == '__main__':
     insert_data()
 
     '''更新商住 为 商业'''
-    property_type = [{"label": "写字楼", "value": 7}, {"label": "别墅", "value": 5}, {"label": "商铺", "value": 3}, {"label": "住宅", "value": 1}, {"label": "商业", "value": 6}]
+    property_type = [{'label': '住宅', 'value': 1}, {'label': '别墅', 'value': 5}, {'label': '商业', 'value': 6}, {'label': '写字楼', 'value': 7},  {'label': '商铺', 'value': 3}]
     citytt = ['北京','佛山','广州','泉州','石家庄','珠海','成都','东莞','福州','厦门','上海']
     property_type = json.dumps(property_type, ensure_ascii=False)
     sqls = []
@@ -96,15 +98,26 @@ if __name__ == '__main__':
     db.thread_sql(sqls)
 
     '''更新  商业化城市  commercial_type =1'''
-    excel = read_excel('新房商业化城市名单.xlsx', '工作表1',row_or_col='row', start=0)
-    cityss = []
-    for i in excel:
-        cityss.append(i[0])
+    cityss = requests.get('http://api.zhuge.com/newhouse/api/v1/city/getopenarea')
+    cityss = json.loads(cityss.text).get('data')
+    print(cityss)
     sqls = []
-    for k in cityss:
-        sql = f"UPDATE spider.city_bladeinfo SET commercial_type = 1 WHERE city_name = '{k}'"
-        sqls.append(sql)
-    db.thread_sql(sqls)
+    if cityss:
+        #  先把字段全变成0
+        sqls = ['UPDATE spider.city_bladeinfo SET commercial_type = 0']
+        db.thread_sql(sqls)
+        for k in cityss:
+            city = k.get('city')
+            print(city)
+            if city:
+                sql = f"UPDATE spider.city_bladeinfo SET commercial_type = 1 WHERE city_spy = '{city}'"
+                sqls.append(sql)
+            else:
+                raise Exception('没有获取城市简拼')
+
+        db.thread_sql(sqls)
+    else:
+        raise Exception('钧钧接口没有数据')
 
 
 
