@@ -98,19 +98,15 @@ if __name__ == '__main__':
     db.thread_sql(sqls)
 
     '''更新  商业化城市  commercial_type =1'''
-    cityss = requests.get('http://api.zhuge.com/newhouse/api/v1/city/getopenarea')
-    cityss = json.loads(cityss.text).get('data')
-    print(cityss)
+    cityss = ['bj','sh','cd','nj','tj','cq','sy','su','sanya','zz','jn','km','xa','heb','cs','wx','sjz','nn','cz','zh','lz','zs','ly','gy','fs','jx','yancheng','chengde','xx','zb','hk']
     sqls = []
     if cityss:
         #  先把字段全变成0
         sqls = ['UPDATE spider.city_bladeinfo SET commercial_type = 0']
         db.thread_sql(sqls)
         for k in cityss:
-            city = k.get('city')
-            print(city)
-            if city:
-                sql = f"UPDATE spider.city_bladeinfo SET commercial_type = 1 WHERE city_spy = '{city}'"
+            if k:
+                sql = f"UPDATE spider.city_bladeinfo SET commercial_type = 1 WHERE city_spy = '{k}'"
                 sqls.append(sql)
             else:
                 raise Exception('没有获取城市简拼')
