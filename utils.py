@@ -170,7 +170,7 @@ class Connect_mysql(object):
                      'password': 'CszwRk3breCsM5BCH0yDfHLorJM5QB5T'},
         '二手房_新': {'host': 'mysql.zhugefang.com', 'port': 9511, 'user': 'data_rw',
                   'password': 'BQ6Qr1*dIh%##bK3zg5p0M6x@Mkqs&hg'},
-        '二手房': {'host': 'mysql.zhugefang.com', 'port': 9521, 'user': 'data_r',
+        '二手房': {'host': 'mysql.zhugefang.com', 'port': 9521, 'user': 'data_rw',
                 'password': 'BQ6Qr1*dIh%##bK3zg5p0M6x@Mkqs&hg'},
         '租房': {'host': 'mysql.zhugefang.com', 'port': 9532, 'user': 'data_rw',
                'password': 'BQ6Qr1*dIh%##bK3zg5p0M6x@Mkqs&hg'},

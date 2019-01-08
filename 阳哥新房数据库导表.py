@@ -7,7 +7,7 @@ import json
 
 city = citys()
 excel = read_excel('ss.xlsx', '价格区间', start=2)
-db = Connect_mysql('测试库')
+db = Connect_mysql('二手房')
 city_all = []
 r = re.compile(r"text:\'(.*)\'")
 for k in excel:
