@@ -5,7 +5,7 @@ import requests
 import json
 
 
-# city = citys()
+city = citys()
 excel = read_excel('ss.xlsx', '价格区间', start=2)
 db = Connect_mysql('测试库')
 city_all = []
@@ -43,7 +43,7 @@ def insert_data():
                         yishang = re.search(r'以上', s)
                         if yixia:
                             num = re.search('\d+', s).group()
-                            dict = {'value': '0-%s' % num, 'label': '%s元/平以下' % num}
+                            dict = {'value': '1-%s' % num, 'label': '%s元/平以下' % num}
                             # dict = json.dumps(dict, ensure_ascii=False)
                         elif yishang:
                             num = re.search('\d+', s).group()
@@ -73,7 +73,7 @@ def insert_data():
 
         else:
             times = int(time.time())
-            price = [{"value": "0-4000", "label": "4000元/平以下"}, {"value": "4000-5000", "label": "4000-5000元/平"}, {"value": "5000-6000", "label": "5000-6000元/平"}, {"value": "6000-7000", "label": "6000-7000元/平"}, {"value": "7000-8000", "label": "7000-8000元/平"}, {"value": "8000-10000", "label": "8000-10000元/平"}, {"value": "10000-999999999", "label": "10000元/平以上"}]
+            price = [{"value": "1-4000", "label": "4000元/平以下"}, {"value": "4000-5000", "label": "4000-5000元/平"}, {"value": "5000-6000", "label": "5000-6000元/平"}, {"value": "6000-7000", "label": "6000-7000元/平"}, {"value": "7000-8000", "label": "7000-8000元/平"}, {"value": "8000-10000", "label": "8000-10000元/平"}, {"value": "10000-999999999", "label": "10000元/平以上"}]
             price_range = json.dumps(price, ensure_ascii=False)
             sql = f"insert into spider.city_bladeinfo (city_id,city_name,price_range,property_type,status,ctime,city_fpy,city_spy,commercial_type) values ({city_id},'{city_name}','{price_range}','{property_type}',1,{times},'{city_fpy}','{city_spy}',0)"
             sqls.append(sql)
