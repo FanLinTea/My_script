@@ -206,7 +206,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.阳哥新房数据库导表">
+  <component name="RunManager" selected="Python.utils">
     <configuration name="多读书" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="My_script" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -453,11 +453,9 @@
       <item itemvalue="Python.utils" />
       <item itemvalue="Python.xinfang" />
       <item itemvalue="Python.多读书" />
-      <item itemvalue="Python.阳哥新房数据库导表" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.阳哥新房数据库导表" />
         <item itemvalue="Python.utils" />
         <item itemvalue="Python.多读书" />
         <item itemvalue="Python.xinfang" />

@@ -229,7 +229,7 @@ class Connect_mysql(object):
 
     def thread_sql(self, sqls):
         if not isinstance(sqls, list):
-            raise Exception('需要执行的sql应该放到列表中,这样才能启动多线程')
+            raise Exception('请把需要执行的所有 sql 语句放入列表中,这样才服务线程池传参')
         if 'select' in sqls[0]:
             request = threadpool.makeRequests(self.select_sql, sqls)
             for req in request:
