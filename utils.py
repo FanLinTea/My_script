@@ -168,11 +168,11 @@ class Connect_mysql(object):
                  'password': 'BQ6Qr1*dIh%##bK3zg5p0M6x@Mkqs&hg'},
         'zhuge_dm': {'host': 'mysql.zhugefang.com', 'port': 9571, 'user': 'dm_rw',
                      'password': 'CszwRk3breCsM5BCH0yDfHLorJM5QB5T'},
-        '二手房_新': {'host': 'mysql.zhugefang.com', 'port': 9511, 'user': 'data_rw',
+        '二手房_新': {'host': 'mysql.zhugefang.com', 'port': 9511, 'user': 'data_r',
                   'password': 'BQ6Qr1*dIh%##bK3zg5p0M6x@Mkqs&hg'},
-        '二手房': {'host': 'mysql.zhugefang.com', 'port': 9521, 'user': 'data_rw',
+        '二手房': {'host': 'mysql.zhugefang.com', 'port': 9521, 'user': 'data_r',
                 'password': 'BQ6Qr1*dIh%##bK3zg5p0M6x@Mkqs&hg'},
-        '租房': {'host': 'mysql.zhugefang.com', 'port': 9532, 'user': 'data_rw',
+        '租房': {'host': 'mysql.zhugefang.com', 'port': 9532, 'user': 'data_r',
                'password': 'BQ6Qr1*dIh%##bK3zg5p0M6x@Mkqs&hg'},
         '临时库': {'host': 'rm-2ze7398d890nw9k12po.mysql.rds.aliyuncs.com', 'port': 3306, 'user': 'data_r',
                 'password': 'BQ6Qr1*dIh%##bK3zg5p0M6x@Mkqs&hg'},
@@ -229,7 +229,7 @@ class Connect_mysql(object):
 
     def thread_sql(self, sqls):
         if not isinstance(sqls, list):
-            raise Exception('请把需要执行的所有 sql 语句放入列表中,这样才服务线程池传参')
+            raise Exception('请把需要执行的所有 sql 语句放入列表中,这样才能给线程池传参')
         if 'select' in sqls[0]:
             request = threadpool.makeRequests(self.select_sql, sqls)
             for req in request:
